@@ -16,6 +16,7 @@ const rotateButton = document.getElementById('rotate')
 const turnDisplay = document.getElementById('turn')
 const messageDisplay = document.getElementById('message')
 
+let isHorizontal = true
 const userSquares = []
 const computerSquares = []
 const width = 10
@@ -91,6 +92,29 @@ function generate(ship) {
     generate(shipArray[3])
     generate(shipArray[4])
 
+    //rotate ships 
+    function rotate() {
+        if (isHorizontal) {
+            destroyer.classList.toggle('destroyer-container-vertical')
+            submarine.classList.toggle('submarine-container-vertical')
+            cruiser.classList.toggle('cruiser-container-vertical')
+            battleship.classList.toggle('battleship-container-vertical')
+            carrier.classList.toggle('carrier-container-vertical')
+
+            isHorizontal = false
+        }
+        if (!isHorizontal) {
+            destroyer.classList.toggle('destroyer-container')
+            submarine.classList.toggle('submarine-container')
+            cruiser.classList.toggle('cruiser-container')
+            battleship.classList.toggle('battleship-container')
+            carrier.classList.toggle('carrier-container')
+
+            isHorizontal = true
+        }
+    }
+
+    rotateButton.addEventListener('click', rotate)
 });
 
 //create a Ship factory function. Needs to include - length, where they’ve been hit and whether or not they’ve been sunk.
