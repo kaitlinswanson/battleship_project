@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/kaitlinswanson/battleship_project#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.14.7",
     "jest": "^27.0.6",
     "webpack": "^5.42.1",
     "webpack-cli": "^4.7.2"

@@ -1,2 +1,2 @@
 # battleship_project
-The goal of this project is to practice TDD. 
+The goal of this project is to create a working game of battleship. In this project, I learned more about organizing code, better use of Math.random, and how to set up 'drag and drop' items. 
