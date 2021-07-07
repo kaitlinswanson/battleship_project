@@ -102,6 +102,7 @@ function generate(ship) {
             carrier.classList.toggle('carrier-container-vertical')
 
             isHorizontal = false
+            return
         }
         if (!isHorizontal) {
             destroyer.classList.toggle('destroyer-container')
@@ -111,10 +112,75 @@ function generate(ship) {
             carrier.classList.toggle('carrier-container')
 
             isHorizontal = true
+            return
         }
     }
 
     rotateButton.addEventListener('click', rotate)
+
+    //drag and drop - user ship
+
+    ships.forEach(ship => ship.addEventListener('dragstart', dragStart))
+    userSquares.forEach(square => square.addEventListener('dragstart', dragStart))
+    userSquares.forEach(square => square.addEventListener('dragover', dragOver))
+    userSquares.forEach(square => square.addEventListener('dragenter', dragEnter))
+    userSquares.forEach(square => square.addEventListener('dragleave', dragLeave))
+    userSquares.forEach(square => square.addEventListener('drop', dragDrop))
+    userSquares.forEach(square => square.addEventListener('dragend', dragEnd))
+
+    let selectedShipNameWithIndex
+    let draggedShip 
+    let draggedShipLength
+
+    ships.forEach(ship => ship.addEventListener('mousedown', (e) => {
+        selectedShipNameWithIndex = e.target.id;
+    }))
+    function dragStart() {
+        draggedShip = this; 
+        draggedShipLength = this.childNodes.length;
+    }
+
+   function dragOver(e) {
+        e.preventDefault();
+    }
+
+    function dragEnter(e) {
+        e.preventDefault();
+    }
+
+    function dragLeave() {
+        console.log('drag leave')
+    }
+
+    function dragDrop() {
+       let shipNameWithLastId = draggedShip.lastChild.id;
+       let shipClass = shipNameWithLastId.slice(0,-2);
+        console.log(shipClass);
+        //gets index of last. ParseInt turns it into a number instead of string
+        let lastShipIndex = parseInt(shipNameWithLastId.substr(-1));
+        let shipLastId = lastShipIndex + parseInt(this.dataset.id);
+
+        selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1));
+
+        shipLastId = shipLastId - selectedShipIndex;
+        console.log(shipLastId);
+
+        if (isHorizontal) { 
+            for (let i=0; i < draggedShipLength; i++) {
+                userSquares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', shipClass);
+            }
+        } else if (!isHorizontal) {
+            for (let i=0; i < draggedShipLength; i++) {
+                userSquares[parseInt(this.dataset.id) -selectedShipIndex + width*i].classList.add('taken', shipClass)
+            }
+        } else return
+
+        displayGrid.removeChild(draggedShip)
+    }
+
+    function dragEnd() {
+        
+    }
 });
 
 //create a Ship factory function. Needs to include - length, where they’ve been hit and whether or not they’ve been sunk.
