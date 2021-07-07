@@ -190,13 +190,9 @@ function generate(ship) {
     function dragEnd() {
         console.log('dragend');
     }
-
     //the game logic
     function playGame() {
-        checkForWin()
-        if (isGameOver = true) {
-            gameOver();
-        }
+        if(isGameOver) return 
         if (currentPlayer === 'user') {
             turnDisplay.innerHTML = 'Your Turn!';
             computerSquares.forEach(square => square.addEventListener('click', function(e) {
@@ -208,6 +204,7 @@ function generate(ship) {
         setTimeout(computerTurn, 1000)
         }
     }
+    
     startButton.addEventListener('click', playGame)
 
     let destroyerCount = 0
@@ -217,10 +214,12 @@ function generate(ship) {
     let carrierCount = 0
 
     function revealSquare(square) {
-        if (square.classList.contains('boom')) {
+        if (!square.classList.contains('boom')) {
 
        
         if (square.classList.contains('destroyer')) destroyerCount++
+        console.log(destroyerCount)
+
         if (square.classList.contains('submarine')) submarineCount++
         if (square.classList.contains('cruiser')) cruiserCount++
         if (square.classList.contains('battleship')) battleshipCount++
@@ -233,6 +232,7 @@ function generate(ship) {
         } else { 
             square.classList.add('miss')
         }
+        checkForWin()
         currentPlayer = 'computer'
         playGame()
     }
@@ -253,59 +253,61 @@ function generate(ship) {
             if (userSquares[random].classList.contains('cruiser')) cpuCruiserCount++
             if (userSquares[random].classList.contains('battleship')) cpuBattleshipCount++
             if (userSquares[random].classList.contains('carrier')) cpuCarrierCount++
+            checkForWin()
+
         } else computerTurn()
         currentPlayer = 'user'
         turnDisplay.innerHTML = "Your Turn"
-        checkforWin()
     }
     
     function checkForWin() {
         if (destroyerCount === 2) { 
-            infoDisplay.innerHTML = 'You sunk the computers destroyer'
+            console.log('working')
+            messageDisplay.innerHTML = 'You sunk the computers destroyer'
             destroyerCount = 10
         }
         if (submarineCount === 3) { 
-            info.display.innerHTML = 'You sunk the computers submarine'
+            messageDisplay.innerHTML = 'You sunk the computers submarine'
             submarineCount = 10
         }
         if (cruiserCount === 3) { 
-            info.display.innerHTML = 'You sunk the computers cruiser'
+            messageDisplay.innerHTML = 'You sunk the computers cruiser'
             cruiserCount = 10
         }
         if (battleshipCount === 4) { 
-            info.display.innerHTML = 'You sunk the computers battleship'
+            messageDisplay.innerHTML = 'You sunk the computers battleship'
             battleshipCount = 10
         }
         if (carrierCount === 5) { 
-            info.display.innerHTML = 'You sunk the computers carrier'
+            messageDisplay.innerHTML = 'You sunk the computers carrier'
             carrierCount = 10
         }
         if(cpuDestroyerCount === 2) { 
-            infoDisplay.innerHTML = 'You sunk the computers destroyer'
+            messageDisplay.innerHTML = 'You sunk the computers destroyer'
             cpuDestroyreCount = 10
         }
         if (cpuSubmarineCount === 3) { 
-            info.display.innerHTML = 'You sunk the computers submarine'
+            messageDisplay.innerHTML = 'You sunk the computers submarine'
             cpuSubmarineCount = 10
         }
         if (cpuCruiserCount === 3) { 
-            info.display.innerHTML = 'You sunk the computers cruiser'
+            messageDisplay.innerHTML = 'You sunk the computers cruiser'
             cpuCruiserCount = 10
         }
         if (cpuBattleshipCount === 4) { 
-            info.display.innerHTML = 'You sunk the computers battleship'
+            messageDisplay.innerHTML = 'You sunk the computers battleship'
             cpuBattleshipCount = 10
         }
         if (cpuCarrierCount === 5) { 
-            info.display.innerHTML = 'You sunk the computers carrier'
+            messageDisplay.innerHTML = 'You sunk the computers carrier'
             cpuCarrierCount = 10
     }
     if ((destroyerCount + submarineCount + cruiserCount + battleshipCount + carrierCount) === 50) {
-        infoDisplay.innerHTML = "You Win!"
+        messageDisplay.innerHTML = "You Win!"
         gameOver()
     }
     if ((cpuDestroyerCount + cpuSubmarineCount + cpuCruiserCount + cpuBattleshipCount + cpuCarrierCount) === 50) {
-        infoDisplay.innerHTML = "Computer Wins!"
+        messageDisplay.innerHTML = "Computer Wins!"
         gameOver()
         }
     }
@@ -313,6 +315,7 @@ function generate(ship) {
     function gameOver() {
         isGameOver = true
         startButton.removeEventListener('click', playGame)
+        turnDisplay.innerHTML = "GAME OVER"
     }
 });
 
