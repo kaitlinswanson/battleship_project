@@ -216,10 +216,7 @@ function generate(ship) {
     function revealSquare(square) {
         if (!square.classList.contains('boom')) {
 
-       
         if (square.classList.contains('destroyer')) destroyerCount++
-        console.log(destroyerCount)
-
         if (square.classList.contains('submarine')) submarineCount++
         if (square.classList.contains('cruiser')) cruiserCount++
         if (square.classList.contains('battleship')) battleshipCount++
