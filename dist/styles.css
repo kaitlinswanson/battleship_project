@@ -138,3 +138,11 @@ height: 40px;
 .carrier { 
     background-color: lightsalmon;
 }
+
+.boom { 
+    background-color: red;
+}
+
+.miss { 
+    background-color: black;
+}
